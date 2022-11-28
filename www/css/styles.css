@@ -1,1 +1,14 @@
 /* add your own styles here */
+
+.box{
+
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(red,blue);
+    position: absolute;
+    left: 50%;
+    margin-left: -100px;
+    top: 50%;
+    margin-top: -100px;
+    
+}
