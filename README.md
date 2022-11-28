@@ -7,7 +7,7 @@ Updates to original Cordova app
 
 ## Install instructions
 
-1. Fork the repository or download the zip
+1. Fork the repository and clone to your machine OR download the zip
 2. install android platform
 ```
 npx cordova platform add android
