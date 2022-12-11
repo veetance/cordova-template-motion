@@ -47,7 +47,7 @@ $(".button").on("touchend click", function () {
 
 function meterTimer() {
     if (startGame == true) {
-        var time = 5;
+        var time = 10;
         var timer = setInterval(function () {
             time--;
             $(".meterTimer").html("<h4>" + time + "s" + "</h4>");
@@ -62,6 +62,10 @@ function meterTimer() {
 
 
 
+
+
+
+
     function onDeviceReady() {  
 
   // Cordova is now initialized. Have fun!
@@ -71,7 +75,7 @@ function meterTimer() {
     alert("sorry not supported");
   }
 
-  var movebox = 0;
+  var movebox = 10/50;
 
   function handleMotion(event) {
     // console.log(meterTimer)
@@ -126,4 +130,10 @@ function meterTimer() {
 
 
 
+
+// reset accelerometer on touch or click of .lives 
+
+$(".lives").on("touchend click", function () {
+    window.location.reload();
+}); 
 

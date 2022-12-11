@@ -25,6 +25,7 @@
     text-align: center;
     margin: 0;
     padding: 0;
+    z-index: 700;
   }
 
   h5{
@@ -78,13 +79,24 @@
 
   .top-nav{
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px;
+    width: 100%;
+    height: 20%;
+    
+  }
+
+  .inner-nav{
+    display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 20%;
+    height: 100%;
     padding: 20px 20px;
-   
   }
+  
 
   .logo{
     display: flex;
@@ -95,11 +107,11 @@
     background-size: contain;
     width: auto;
     height: 100%;
+    z-index: 700;
     /* aspect-ratio: 1/1; */
   }
 
   .meterTimer{
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -107,6 +119,26 @@
     width: 50%;
     height: 100%;
   }
+
+
+
+  .meterBar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 1rem;
+    padding: 0px;
+    margin: 8px;
+    position: relative;
+    top: 0px;
+    border-radius: 8px;
+
+    background-color: #ff9780b7;
+    z-index: 600;
+  }
+
+
 
   .leadBoard{
     display: flex;
@@ -116,6 +148,7 @@
     border-radius: 10px;
     width: auto;
     height: 100%;
+    z-index: 700;
     /* aspect-ratio: 1/1; not working on mobile so i did it with js */
   }
 
@@ -178,7 +211,7 @@
     width: 100%;
     height: 100%;
     padding: 0px;
-    margin-top: 1rem;
+    margin-top: 0rem;
     margin-bottom: 1rem; 
    
 }
