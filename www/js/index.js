@@ -1,23 +1,41 @@
 document.addEventListener("deviceready", onDeviceReady, false);
 
 
-// make .leadBoard  and logo width the same as its height/ my fix for the aspect ratio issue//
-function refreshaspectRatio() {
-
-var leadBoard = $(".leadBoard");
-var leadBoardH = leadBoard.height();
-leadBoard.css("width", leadBoardH);
-
-var logo = $(".logo");
-var logoH = logo.height();
-logo.css("width", logoH);
-
-}
-
-// call refreshaspectRatio function each time the top-nav width changes
-refreshaspectRatio();
-$(window).resize(function () {  
+ // make .leadBoard  and logo width the same as its height/ my fix for the aspect ratio issue//
+  
+ function refreshaspectRatio() {
+    var leadBoard = $(".leadBoard");
+    var leadBoardH = leadBoard.height();
+    leadBoard.css("width", leadBoardH);
+  
+    var logo = $(".logo");
+    var logoH = logo.height();
+    logo.css("width", logoH);
+  }
+  
+  refreshaspectRatio();
+  $(window).resize(function () {
     refreshaspectRatio();
+  });
+
+
+
+
+
+
+
+
+
+// set startGame to false using boolean
+
+var startGame = false;
+
+// startGame boolean is set to true on the touch or press of .button
+
+$(".button").on("touchend click", function () {
+    startGame = true;
+    $(".button").hide();
+    meterTimer();
 });
 
 
@@ -25,9 +43,28 @@ $(window).resize(function () {
 
 
 
-function onDeviceReady() {
-  // Cordova is now initialized. Have fun!
+// run the timer and update the .meterTimer div with the time in seconds max time of 60 seconds using innerHTML to update the h4 inside .meterTimer div and set the startGame boolean to true wile the timer is running and false when the timer is not running 
 
+function meterTimer() {
+    if (startGame == true) {
+        var time = 5;
+        var timer = setInterval(function () {
+            time--;
+            $(".meterTimer").html("<h4>" + time + "s" + "</h4>");
+            if (time == 0) {
+
+                clearInterval(timer);
+                startGame = false;   
+            }
+        }, 1000);
+    }
+}
+
+
+
+    function onDeviceReady() {  
+
+  // Cordova is now initialized. Have fun!
   if (window.DeviceOrientationEvent) {
     window.addEventListener("deviceorientation", handleMotion);
   } else {
@@ -37,7 +74,7 @@ function onDeviceReady() {
   var movebox = 0;
 
   function handleMotion(event) {
-    // console.log(event)
+    // console.log(meterTimer)
     var z = event.alpha;
     var x = event.beta;
     var y = event.gamma;
@@ -58,8 +95,11 @@ function onDeviceReady() {
     var box = $(".box");
     var currentX = parseInt(box.css("left"));
     var currentY = parseInt(box.css("top"));
-    box.css("left", currentX + y + movebox);
-    box.css("top", currentY + x + movebox);
+    box.css("left", currentX + y + movebox - 10);
+    box.css("top", currentY + x + movebox - 10);
+
+    
+
 
     // make .platform act as a portal.
     var pWW = $(".platform").width();
@@ -74,19 +114,14 @@ function onDeviceReady() {
     } else if (currentY < 0) {
       box.css("top", pHH);
     }
-
-    
-    //////////////////////////////////////
-
   }
-  
 }
 
-// reset page function rloads the page on the touch or press of .lives
 
-$(".lives").on("touchend click", function () {
-  location.reload();
-});
+
+
+
+
 
 
 
