@@ -37,16 +37,20 @@ $(".button").on("touchend click", function () {
     "linear"
   );
   meterTimer();
+
+
 });
+
+
 
 // run the timer and update the .meterTimer div with the time in seconds max time of 60 seconds using innerHTML to update the h4 inside .meterTimer div and set the startGame boolean to true wile the timer is running and false when the timer is not running
 
 function meterTimer() {
   if (startGame == true) {
     rotateHole();
-    HoleSucking();
     decreseMeter();
-
+    collision();
+  
     var time = 10;
     var timer = setInterval(function () {
       time--;
@@ -145,7 +149,7 @@ function rotateHole() {
 // create a pulsing animation around .Hole it fades in over a period of 500 milliseconds and grows outward from the center of the Hole element until it reaches a maximum size and then fades out. This animation continues to run as long as the startGame variable is true. When startGame becomes false, the animation stops and any remaining pulses are removed from the page.
 
 function HoleSucking() {
-  if (startGame) {
+  if (startGame ) {
     var hole = $(".Hole");
     var centerX = hole.width() / 2;
     var centerY = hole.height() / 2;
@@ -201,10 +205,51 @@ function HoleSucking() {
   }
 }
 
+// call the HoleSucking when .box wis colliding with .Hole
+
+
+function collision() {
+  const $box = $('.box');
+  const $hole = $('.Hole');
+
+  const $intersectingElements = $box.filter(function() {
+    return $(this).is($hole);
+  });
+
+  if ($intersectingElements.length > 0) {
+    console.log('Intersection detected');
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var startTilt = false;
 
 function onDeviceReady() {
+
   // if .button is pressed or touched startTilt is set to true and the deviceorientation event listener is added to the window object and the handleMotion function is called
+
 
   $(".button").on("touchend click", function () {
     startTilt = true;

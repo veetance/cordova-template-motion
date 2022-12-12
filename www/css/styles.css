@@ -285,7 +285,7 @@
     margin-top: -25px;
     border-radius: 25px;
 
-    z-index: 600;
+    
 }
 
 .Hole {
@@ -302,7 +302,7 @@
     border-radius: 50%;
     border: solid 8px rgba(128, 128, 128, 0.459);
     border-style: ridge;
-    z-index: 500;
+   
     transform-origin: 50% 50%;
 }
 
