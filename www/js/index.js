@@ -18,7 +18,6 @@ $(window).resize(function () {
 });
 
 // set startGame to false using boolean
-
 var startGame = false;
 
 // startGame boolean is set to true on the touch or press of .button
@@ -37,11 +36,7 @@ $(".button").on("touchend click", function () {
     "linear"
   );
   meterTimer();
-
-
 });
-
-
 
 // run the timer and update the .meterTimer div with the time in seconds max time of 60 seconds using innerHTML to update the h4 inside .meterTimer div and set the startGame boolean to true wile the timer is running and false when the timer is not running
 
@@ -49,10 +44,7 @@ function meterTimer() {
   if (startGame == true) {
     rotateHole();
     decreseMeter();
-    
-   
-  
-  
+
     var time = 10;
     var timer = setInterval(function () {
       time--;
@@ -66,12 +58,10 @@ function meterTimer() {
   }
 }
 
-// using function called decreseMeter .meterBar div decreases as the time decreases smoothly one % at a time and stops when the time is 0 and the startGame boolean is set to false.
-
+// .meterBar div decreases as the time decreases smoothly one % at a time and stops when the time is 0 and the startGame boolean is set to false.
 
 function decreseMeter() {
   if (startGame == true) {
-
     // checkIfTouching();
 
     var time = 10;
@@ -83,7 +73,7 @@ function decreseMeter() {
           width: width + "%",
         },
         {
-          duration: 1000/4,
+          duration: 1000 / 4,
           easing: "linear",
         }
       );
@@ -114,8 +104,8 @@ function gameOver() {
 }
 
 // rotatehole
-
 function rotateHole() {
+  
   if (startGame == true) {
     var hole = $(".Hole");
     var centerX = hole.width() / 2;
@@ -136,14 +126,10 @@ function rotateHole() {
   }
 }
 
-// create a pulsing animation around .Hole it fades in over a period of 500 milliseconds and grows outward from the center of the Hole element until it reaches a maximum size and then fades out. This animation continues to run as long as the startGame variable is true. When startGame becomes false, the animation stops and any remaining pulses are removed from the page.
-
-
-
+//a pulsing animation around .Hole it fades in over a period of 500 milliseconds and grows outward from the center of the Hole element until it reaches a maximum size and then fades out. This animation continues to run as long as the startGame variable is true. When startGame becomes false, the animation stops and any remaining pulses are removed from the page.
 
 function HoleSucking() {
-
-  if (startGame ) {
+  if (startGame) {
     var hole = $(".Hole");
     var centerX = hole.width() / 2;
     var centerY = hole.height() / 2;
@@ -165,7 +151,7 @@ function HoleSucking() {
         });
 
       pulse.css({
-        opacity: "-1",
+        opacity: "-0",
       });
 
       pulse.animate(
@@ -193,53 +179,56 @@ function HoleSucking() {
             createPulse();
           }
         }
+
+        // clearInterval(interval) when stopHoleSucking is true
+        if (stopHoleSucking == true) {
+          clearInterval(interval);
+          pulse.remove();
+        }
+        
+
       }, 20);
     }
     createPulse();
-  } 
-}
-
-
-
-
-
-function checkIfTouching() {
-  // Select the target element and the other element
-  const box = document.querySelector('.box');
-  const hole = document.querySelector('.Hole');
-  
-  // Get the bounding client rects of both elements
-  const boxRect = box.getBoundingClientRect();
-  const holeRect = hole.getBoundingClientRect();
-  
-  // Check if the rects intersect
-  if (boxRect.x < holeRect.x + holeRect.width &&
-  boxRect.x + boxRect.width > holeRect.x &&
-  boxRect.y < holeRect.y + holeRect.height &&
-  boxRect.height + boxRect.y > holeRect.y) {
-    // If the rects intersect, log a message and call HoleSucking()
-    console.log('intersecting');
-    HoleSucking();
-  } else {
-    // If the rects do not intersect, log a message
-    console.log('not intersecting');
   }
 }
 
 
 
+function checkIfTouching() {
+  // Select the target element and the other element
+  const box = document.querySelector(".box");
+  const hole = document.querySelector(".Hole");
 
-  
+  // Set stopHoleSucking to false
+  stopHoleSucking = false;
 
+  // Get the bounding client rects of both elements
+  const boxRect = box.getBoundingClientRect();
+  const holeRect = hole.getBoundingClientRect();
 
+  // Check if the rects intersect
+  if (
+    boxRect.x < holeRect.x + holeRect.width &&
+    boxRect.x + boxRect.width > holeRect.x &&
+    boxRect.y < holeRect.y + holeRect.height &&
+    boxRect.height + boxRect.y > holeRect.y
+  ) {
 
+    // If the rects intersect, log a message and call HoleSucking()
+    console.log("intersecting");
+    // Check if HoleSucking has already been called
+    if (!$(".pulse").length*2) {
+    // If HoleSucking has not been called, call it
+    HoleSucking();
+    }
 
-
-
-
-
-
-
+  } else {
+    // If the rects do not intersect, log a message and set stopHoleSucking to true
+    console.log("not intersecting");
+    stopHoleSucking = true;
+  }
+}
 
 
 var startTilt = false;
@@ -247,7 +236,6 @@ var startTilt = false;
 function onDeviceReady() {
 
   // if .button is pressed or touched startTilt is set to true and the deviceorientation event listener is added to the window object and the handleMotion function is called
-
 
   $(".button").on("touchend click", function () {
     startTilt = true;
@@ -263,7 +251,6 @@ function onDeviceReady() {
 
   function handleMotion(event) {
     if (startGame === true) {
-      
       // Your code to handle the accelerometer data here
 
       // console.log(meterTimer)
@@ -286,37 +273,36 @@ function onDeviceReady() {
       }
 
       rotateBox();
-      // wrap the above code as anonymous function
+    
 
       function animateBall() {
+        // Update the x and y position of the .box element by adding
+        // the x and y values from the accelerometer data
+
         var box = $(".box");
         var currentX = parseInt(box.css("left"));
         var currentY = parseInt(box.css("top"));
         box.css("left", currentX + y + movebox - 10);
         box.css("top", currentY + x + movebox - 10);
 
+        // make .platform act as a portal.
+        var pWW = $(".platform").width();
+        var pHH = $(".platform").height();
+
+        if (currentX > pWW) {
+          box.css("left", 0);
+        } else if (currentX < -20) {
+          box.css("left", pWW);
+        } else if (currentY > pHH) {
+          box.css("top", 0);
+        } else if (currentY < 0) {
+          box.css("top", pHH);
+        }
+
         checkIfTouching();
       }
 
-      requestAnimationFrame(animateBall);
-
-      // Update the x and y position of the .box element by adding
-      // the x and y values from the accelerometer data
-      
-
-      // make .platform act as a portal.
-      var pWW = $(".platform").width();
-      var pHH = $(".platform").height();
-
-      if (currentX > pWW) {
-        box.css("left", 0);
-      } else if (currentX < -20) {
-        box.css("left", pWW);
-      } else if (currentY > pHH) {
-        box.css("top", 0);
-      } else if (currentY < 0) {
-        box.css("top", pHH);
-      }
+      animateBall();
     }
   }
 }
