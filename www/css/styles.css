@@ -39,12 +39,17 @@
   }
 
   h5{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+   
+  
     font-size: 1.5rem;
     font-weight: 800;
     color: #ffffff;
-    text-align: center;
-    margin: 0;
     padding: 0;
+    margin: 0 auto;
   }
 
   .gui{
@@ -115,6 +120,7 @@
     background-color: rgba(255, 0, 0, 0);
     background-image: url(../img/logo.png);
     background-size: contain;
+    background-repeat: no-repeat;
     width: auto;
     height: 100%;
     z-index: 700;
@@ -190,8 +196,7 @@
   }
 
   .lives:active{
-    opacity: 0.5;
-    transition:cubic-bezier(0,1.28,.45,.91) ;
+    
   }
 
 
@@ -236,6 +241,22 @@
    
 }
 
+
+.buttons-wrap{
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  width: 100%;
+  height: fit-content;
+  padding: 0px;
+  margin: 0px;
+
+  position: relative;
+}
+
+
 .button{
     display: flex;
     justify-content: center;
@@ -246,17 +267,59 @@
     border-radius: 8px;
     padding: 16px;
     margin: 20px;
-
     z-index: 899;
+   
+}
 
-    transform: scale(10px);
-    transition: all 0.1s ease-out;
+.refresh-button{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  background-color: #371d5a00;
+  color: aliceblue;
+  border-radius: 8px;
+  padding: 0px;
+  margin: 20px;
+  margin-left: 0px;
+  z-index: 899;
+}
+
+
+.ico-panel{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0px;
+  margin: 0px;
+
+  background-color: #2a2a3f00;
+  background-repeat: no-repeat;
+
+  background-image: url(../img/refresh-dark-2.svg);
+  opacity: 0.3;
+ 
 }
 
 .button:active{
    opacity:  0.9;
    margin: 18px 10px;
 }
+
+.refresh-button:active{
+  opacity:  0.2;
+
+
+  margin-right: 15px;
+  margin-bottom: 15px;
+  margin-left: 0px;
+
+}
+
+
 
 
 
@@ -284,6 +347,8 @@
     margin-left: -25px;
     margin-top: -25px;
     border-radius: 25px;
+
+    transform-origin: 50% 50%;
 
     
 }
