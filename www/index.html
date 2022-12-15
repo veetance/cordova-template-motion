@@ -4,94 +4,126 @@
 
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="connect-src *;" />
+
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+
+    <link rel="stylesheet" href="css/framework7-bundle.min.css" />
+    <link rel="stylesheet" href="css/framework7-icons.css" />
     <link rel="stylesheet" href="css/styles.css">
-    <title>BlackHole</title>
-    
     <link rel="icon" type="image/png" href="../www/img/logo.png" />
+
+    <title>BlackHole</title>
     
 </head>
 <!-- abomination -->
 
 <body>
 
-   <div class="playground">
-   
-    <div class="top-nav panel">
-
-
-        <div class="logo"></div>
-    
-        <div class="meterTimer"> <h4>BlackHole</h4></div>
-    
-        <div class="leadBoard"> 
-            <svg width="32" height="28" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="1" y="1" width="30" height="10" rx="5" fill="black"/>
-                <rect x="1" y="14" width="30" height="5" rx="2.5" fill="black" fill-opacity="0.6"/>
-                <rect x="1" y="22" width="30" height="5" rx="2.5" fill="black" fill-opacity="0.6"/>
-            </svg> 
-        </div>
-
-    
-    
-    </div>
-
-    <div class="meterBar">
-    
-    </div>
-
-    <div class="platform panel" >
-
-    <div class="Hole"></div>
-
-    <div class="box"></div>
-
-    <div class="buttons-wrap"> 
-
-    <div class="button"> <h5> Begin </h5></div>
-    <div class="refresh-button"> <div class="ico-panel"></div></div>
-    </div>
-    </div>
-
-    
-
-    
-    
   
+   <div id="app">
+    <!-- bkg-panel components go here -->
 
-    <div class="lives panel"> 
+    <!-- Right bkg-panel, with cover effect -->
 
-        <div class="heart-1 heart-panel"> 
-            <div class="heart"></div>
+   
+
+    <div class="view view-main">
+      <!-- component will apply to all pages in view -->
+
+      <!-- NAVBAR Title and Left will have "sliding" effect on page transition -->
+     
+      <div data-name="home" class="page page-homepage">
+        <!-- component is fixed to the page -->
+
+        <div class="page-content">
+          <!-- ...Page content goes here!... -->
+
+          <div class="playground">
+   
+            <div class="top-navigation bkg-panel">
+        
+        
+                <div class="logo"></div>
+            
+                <div class="meterTimer"> <h4>BlackHole</h4></div>
+            
+                <div class="leadBoard"> 
+                    <svg width="32" height="28" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="1" y="1" width="30" height="10" rx="5" fill="black"/>
+                        <rect x="1" y="14" width="30" height="5" rx="2.5" fill="black" fill-opacity="0.6"/>
+                        <rect x="1" y="22" width="30" height="5" rx="2.5" fill="black" fill-opacity="0.6"/>
+                    </svg> 
+                </div>
+        
+            </div>
+        
+            <div class="meterBar">
+            
+            </div>
+        
+            <div class="platform bkg-panel" >
+        
+            <div class="Hole"></div>
+        
+            <div class="box"></div>
+        
+            <div class="buttons-wrap"> 
+        
+            <div class="button"> <h5> Begin </h5></div>
+            <div class="refresh-button"> <div class="ico-bkg-panel"></div></div>
+            </div>
+            </div>
+        
+            
+        
+            
+            
+          
+        
+            <div class="lives bkg-panel"> 
+        
+                <div class="heart-1 heart-bkg-panel"> 
+                    <div class="heart"></div>
+                </div>
+        
+                <div class="heart-2 heart-bkg-panel"> 
+                    <div class="heart"></div>
+                </div>
+        
+                <div class="heart-3 heart-bkg-panel"> 
+                    <div class="heart"></div>
+                </div> 
+        
+                
+        
+                
+                
+                <div class="gui">
+                <div id="z"></div>
+                <div id="y"></div> 
+                <div id="x"></div> 
+                </div> 
+            </div>
+        
+        
+           </div>
+
         </div>
 
-        <div class="heart-2 heart-panel"> 
-            <div class="heart"></div>
-        </div>
+      </div>
 
-        <div class="heart-3 heart-panel"> 
-            <div class="heart"></div>
-        </div> 
-
-        
-
-        
-        
-        <div class="gui">
-        <div id="z"></div>
-        <div id="y"></div> 
-        <div id="x"></div> 
-        </div> 
+      <!-- Bottom Toolbar -->
     </div>
+  </div>
 
 
-   </div>
-
+    
     <script src="cordova.js"></script>
-    <script src="js/p5.min.js"></script>
-    <script src="js/jquery-3.6.1.min.js"></script>
+    <Script src="js/jquery-3.6.1.min.js"></Script>
+    <script src="js/framework7-bundle.min.js"> </script>
     <script src="js/index.js"></script>
 
 </body>

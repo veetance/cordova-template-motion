@@ -1,3 +1,38 @@
+var app = new Framework7({
+  // App root element
+  el: '#app',
+  // other parameters
+
+  routes: [
+    {
+      path: '/',
+      url: 'index.html',
+    },
+    
+    {
+      path: '/page3/',
+      url: 'pages/page3.html',
+    },
+
+
+    {
+      path: '/',
+      url: 'index.html',
+    },
+    
+    {
+      path: '/index/',
+      url: 'index.html',
+    },
+  ],
+
+  
+
+});
+
+var mainView = app.views.create('.view-main')
+
+
 document.addEventListener("deviceready", onDeviceReady, false);
 
 // make .leadBoard  and logo width the same as its height/ my fix for the aspect ratio issue//
@@ -122,11 +157,17 @@ function rotateHole() {
       "@keyframes rotate { 100% { transform: rotate(360deg); } }"
     );
     $("head").append(style);
+  } else if (nextLevel == true) {
+    $(".Hole").stop();
+    $(".Hole").css("animation-name", "none");
+    $(".Hole").css("transform", "rotate(0deg)");
+    $(".Hole").css("animation-name", "none");
+    $(".Hole").css("animation-duration", "2s");
+    
   }
 }
 
 //a pulsing animation around .Hole it fades in over a period of 500 milliseconds and grows outward from the center of the Hole element until it reaches a maximum size and then fades out. This animation continues to run as long as the startGame variable is true. When startGame becomes false, the animation stops and any remaining pulses are removed from the page.
-
 
 function HoleSucking() {
   if (startGame) {
@@ -192,16 +233,13 @@ function HoleSucking() {
 }
 
 function checkIfTouching() {
-
   // Select the target element and the other element
   const box = document.querySelector(".box");
   const hole = document.querySelector(".Hole");
-  
+
   // Get the bounding client rects of both elements
   const boxRect = box.getBoundingClientRect();
   const holeRect = hole.getBoundingClientRect();
-
-
 
   // Check if the rects intersect
   if (
@@ -210,92 +248,85 @@ function checkIfTouching() {
     boxRect.y < holeRect.y + holeRect.height &&
     boxRect.height + boxRect.y > holeRect.y
   ) {
-
     // Set stopHoleSucking to false
     stopHoleSucking = false;
 
     // If the rects intersect, log a message and call HoleSucking()
     console.log("intersecting");
-    levelSuccess() ;
+    levelSuccess();
 
     // Check if HoleSucking has already been called
     if (!$(".pulse").length) {
-
       // If HoleSucking has not been called, call it
       HoleSucking();
-      }
-
-    } else {
-      // If the rects do not intersect, log a message and set stopHoleSucking to true
-      console.log("not intersecting");
-      stopHoleSucking = true;
     }
+  } else {
+    // If the rects do not intersect, log a message and set stopHoleSucking to true
+    console.log("not intersecting");
+    stopHoleSucking = true;
   }
+}
 
+function levelSuccess() {
+  // Select the target element and the other element
+  const box = document.querySelector(".box");
+  const hole = document.querySelector(".Hole");
 
+  // Initialize the timer and the stopInterval variable
+  var timer = 0;
+  var stopInterval = false;
 
-  function levelSuccess() {
-    // Select the target element and the other element
-    const box = document.querySelector(".box");
-    const hole = document.querySelector(".Hole");
-  
-    // Initialize the timer and the stopInterval variable
-    var timer = 0;
-    var stopInterval = false;
-  
-    // Create an interval that runs every second
-    var interval = setInterval(function() {
-      // Get the bounding client rects of both elements
-      const boxRect = box.getBoundingClientRect();
-      const holeRect = hole.getBoundingClientRect();
-  
-      // Check if the rects intersect
-      if (
-        boxRect.x < holeRect.x + holeRect.width &&
-        boxRect.x + boxRect.width > holeRect.x &&
-        boxRect.y < holeRect.y + holeRect.height &&
-        boxRect.height + boxRect.y > holeRect.y
-      ) {
-        // If the rects intersect, increment the timer
-        timer++;
-  
-        // If the timer reaches 3 seconds, log the message and clear the interval
-        if (timer == 3) {
-          console.log("next level");
-          clearInterval(interval);
-          suckedIn();
-        }
-      } else {
-        // If the rects do not intersect, log the message and set stopInterval to true
-        console.log("time cleared");
-        stopInterval = true;
-      }
-  
-      // If stopInterval is true, clear the interval
+  // Create an interval that runs every second
+  var interval = setInterval(function () {
+    // Get the bounding client rects of both elements
+    const boxRect = box.getBoundingClientRect();
+    const holeRect = hole.getBoundingClientRect();
 
-      if (stopInterval == true) {
+    // Check if the rects intersect
+    if (
+      boxRect.x < holeRect.x + holeRect.width &&
+      boxRect.x + boxRect.width > holeRect.x &&
+      boxRect.y < holeRect.y + holeRect.height &&
+      boxRect.height + boxRect.y > holeRect.y
+    ) {
+      // If the rects intersect, increment the timer
+      timer++;
+
+      // If the timer reaches 3 seconds, log the message and clear the interval
+      if (timer == 3) {
+        console.log("next level");
         clearInterval(interval);
+        suckedIn();
       }
-    }, 1000);
-  }
+    } else {
+      // If the rects do not intersect, log the message and set stopInterval to true
+      console.log("time cleared");
+      stopInterval = true;
+    }
 
-  // scales down to 0 the width and height with liner .animate, then removes the box element from the page and sets start game = false  This function is called when the box element intersects with the hole element for 3 seconds.
+    // If stopInterval is true, clear the interval
 
-  function suckedIn() {
+    if (stopInterval == true) {
+      clearInterval(interval);
+    }
+  }, 1000);
+}
+
+// scales down to 0 the width and height with liner .animate, then removes the box element from the page and sets start game = false  This function is called when the box element intersects with the hole element for 3 seconds.
+
+var nextLevel = false;
+function suckedIn() {
+  nextLevel = true;
+  if (nextLevel == true) {
     $(".box").animate(
       { width: "0", height: "0" },
       { duration: 400, easing: "linear" }
     );
-    setTimeout(function () { $(".box").remove(); },500);
-    startGame = false;
-    clearInterval(accelerometerInterval); // stop the accelerometerInterval
-
+    setTimeout(function () {
+      $(".box").remove();
+    }, 500);
   }
-
-
-
-
-
+}
 
 
 
@@ -304,11 +335,9 @@ function checkIfTouching() {
 var startTilt = false;
 
 function onDeviceReady() {
-
   // if .button is pressed or touched startTilt is set to true and the deviceorientation event listener is added to the window object and the handleMotion function is called
 
   $(".button").on("touchend click", function () {
-
     startTilt = true;
 
     // Cordova is now initialized. Have fun!

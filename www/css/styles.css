@@ -7,7 +7,8 @@
   body,
   html {
     min-height: 100vh;
-    margin: 0;
+    margin: 0 !important;
+    padding: 0px !important;
     /* font-family: "Silkscreen"; */
     background-color: #2a2a3f;
     font-family: 'Unbounded', cursive;
@@ -17,6 +18,30 @@
   }
   
   /* -- always have latter code on css-->*/
+
+  #app{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .view, .view-main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .page, .page-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+  }
 
   h3{
     font-size: 1rem;
@@ -92,7 +117,7 @@
 
 
 
-  .top-nav{
+  .top-navigation{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -195,13 +220,8 @@
     padding: 5px 5px;
   }
 
-  .lives:active{
-    
-  }
 
-
-
-  .heart-panel{
+  .heart-bkg-panel{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -245,13 +265,14 @@
 .buttons-wrap{
 
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
+ 
   
   width: 100%;
-  height: fit-content;
+  height: auto;
   padding: 0px;
-  margin: 0px;
+   margin: 0px;
 
   position: relative;
 }
@@ -262,11 +283,15 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    height: 100%;
     background-color: #371d5a;
     color: aliceblue;
     border-radius: 8px;
     padding: 16px;
-    margin: 20px;
+    margin: 0px;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-bottom: 20px;
     z-index: 899;
    
 }
@@ -282,12 +307,12 @@
   border-radius: 8px;
   padding: 0px;
   margin: 20px;
-  margin-left: 0px;
+  margin-left: 20px;
   z-index: 899;
 }
 
 
-.ico-panel{
+.ico-bkg-panel{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -326,7 +351,7 @@
 
 
 
-.panel {
+.bkg-panel {
     border: 2px solid rgba(66, 0, 83, 0.075);
     background-color: rgb(199, 163, 233);
     border-radius: .5rem;
