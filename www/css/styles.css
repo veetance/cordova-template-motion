@@ -68,8 +68,6 @@
     align-items: center;
     justify-content: center;
     height: fit-content;
-   
-  
     font-size: 1.5rem;
     font-weight: 800;
     color: #ffffff;
@@ -246,9 +244,25 @@
    
   }
 
-  .platform {
+  
+  .broken-heart{
     display: flex;
     justify-content: center;
+    align-items: center;
+ 
+    background-image: url(../img/3D-brokrn-heart.svg);
+    background-size: 50px;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+   
+  }
+
+  .platform {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     align-items: flex-end;
     position: relative;
     overflow: hidden;
@@ -258,20 +272,111 @@
     padding: 0px;
     margin-top: 0rem;
     margin-bottom: 1rem; 
-   
+
 }
 
+.level-end{
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: rgba(255, 0, 0, 0);
+  width: 100%;
+  height: 100%;
+  z-index: 700;
+  padding: 20px 20px;
+  /* aspect-ratio: 1/1; */
+}
+
+
+.LE_top{
+  display: flex;
+  align-items:center;
+   justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.548);
+  border-radius:8px;
+  color: #371d5a;
+}
+
+.Time h5{
+  display: flex;
+  color: #371d5a;
+}
+
+.LE_Header{
+  display: flex;
+  align-items:center;
+   justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.801);
+
+  padding: 20px 0px;
+  border-radius: 8px 8px 0px 0px;
+  backdrop-filter: blur(44px);
+}
+
+.LE_bottom{
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(255, 0, 0, 0);
+  width: 100%;
+  height: fit-content;
+  z-index: 700;
+  /* aspect-ratio: 1/1; */
+}
+
+.LE_SCORE{
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 0px;
+  margin: 0px 0px !important;
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  height: 100%;
+  z-index: 700;
+  border-radius: 0px 0px 8px 8px;
+  /* aspect-ratio: 1/1; */
+}
+
+.clock-ico{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 0, 0, 0);
+ 
+  width: 30px;
+  height: 30px;
+  z-index: 700;
+  /* aspect-ratio: 1/1; */
+}
+
+.material-symbols-outlined {
+  color: rgb(15, 2, 46);
+  font-size:2rem !important;
+  font-weight: 900 !important;
+  margin-right: 20px;
+}
 
 .buttons-wrap{
 
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
  
   
   width: 100%;
   height: auto;
-  padding: 0px;
+  padding: 20px;
    margin: 0px;
 
   position: relative;
@@ -285,13 +390,11 @@
     width: 100%;
     height: 100%;
     background-color: #371d5a;
-    color: aliceblue;
+    color: rgb(240, 248, 255);
     border-radius: 8px;
     padding: 16px;
     margin: 0px;
-    margin-top: 20px;
-    margin-left: 20px;
-    margin-bottom: 20px;
+
     z-index: 899;
    
 }
@@ -301,13 +404,30 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: fit-content;
-  background-color: #371d5a00;
+  width: 100%;
+  background-color: #ffffff;
   color: aliceblue;
   border-radius: 8px;
   padding: 0px;
   margin: 20px;
+  margin-right: 0px;
   margin-left: 20px;
+  z-index: 899;
+}
+
+.Home-ico{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: #ffffff;
+  color: aliceblue;
+  border-radius: 8px;
+  padding: 0px;
+  margin: 20px;
+  margin-left: 0px;
+  margin-right:0px ;
   z-index: 899;
 }
 
@@ -316,16 +436,32 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 3rem;
+  height: 3rem;
   padding: 0px;
-  margin: 0px;
-
+  margin: 10px 0px;
+ 
   background-color: #2a2a3f00;
   background-repeat: no-repeat;
 
   background-image: url(../img/refresh-dark-2.svg);
-  opacity: 0.3;
+  opacity: 0.8;
+ 
+}
+
+.ico-bkg-panel-1{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0px;
+  margin: 10px 0px;
+ 
+  background-repeat: no-repeat;
+
+  background-image: url(../img/home-2.svg);
+  opacity: 0.8;
  
 }
 
@@ -336,8 +472,6 @@
 
 .refresh-button:active{
   opacity:  0.2;
-
-
   margin-right: 15px;
   margin-bottom: 15px;
   margin-left: 0px;

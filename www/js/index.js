@@ -66,42 +66,49 @@ $(".button").on("touchend click", function () {
     100,
     "linear"
   );
-  meterTimer();
+  meterTime();
+ 
+  
 });
 
 // run the timer and update the .meterTimer div with the time in seconds max time of 60 seconds using innerHTML to update the h4 inside .meterTimer div and set the startGame boolean to true wile the timer is running and false when the timer is not running
-
-function meterTimer() {
-  if (startGame == true) {
-    rotateHole();
-    decreseMeter();
-
-    var time = 10;
-    var timer = setInterval(function () {
-      time--;
-      if (nextLevel == false) {
-        $(".meterTimer").html("<h4>" + time + "s" + "</h4>");
-      } else if (nextLevel == true && time > 1) {
-        $(".meterTimer").html("<h4>Pass</h4>");
-      }
-      // $(".meterBar").css("width", time * 10 + "%");
-      if (time == 0 ) {
-        clearInterval(timer);
-        startGame = false;
-        gameOver();
-      }
-    }, 1000);
-  }
-}
-
-
-
-
 
 
 // .meterBar div decreases as the time decreases smoothly one % at a time and stops when the time is 0 and the startGame boolean is set to false.
 
 
+function meterTime() {
+  if (startGame == true && nextLevel == false) {
+    rotateHole();
+   
+
+    var time = 10;
+    var timer = setInterval(function() {
+      time--;
+      $(".meterTimer").html("<h4>" + time + "s" + "</h4>");
+
+      var width = time * 10;
+      $(".meterBar").animate(
+        {
+          width: width + "%",
+        },
+        {
+          duration: 1000 / 4,
+          easing: "linear",
+        }
+      );
+
+      if (time == 0 && nextLevel == false) {
+        clearInterval(timer);
+        gameOver();
+      } else if (time > 1 && nextLevel == true) {
+        console.log("Current time: " + time);
+        pauseMeter();
+        clearInterval(timer);
+      }
+    }, 1000);
+  }
+}
 
 
 
@@ -116,51 +123,28 @@ function pauseMeter() {
 
 
 
-function decreseMeter() {
-  if (startGame == true) {
-    // checkIfTouching();
 
-    var time = 10;
-    var timer = setInterval(function () {
-      time--;
-      var width = time * 10;
-      $(".meterBar").animate(
-        {
-          width: width + "%",
-        },
-        {
-          duration: 1000 / 4,
-          easing: "linear",
-        }
-      );
 
-      if (time < 1 && nextLevel == false) {
-        clearInterval(timer);
-        startGame = false;
-      } 
-      else if (time > 1 && nextLevel == true) {
-        console.log("Current time: " + time);
-        pauseMeter();
-        clearInterval(timer);
-      }
-    }, 1000);
-  }
-}
 /// display "Timeout" by replacing .meterBar with a new div with the class GameOver that has the text "Timeout" using h4, make the h3 font-size scale from 0rem to .8rem with smooth linear animation using the animate function and the css transform property scales the h3 font-size from 0rem to .8rem
 
 function gameOver() {
-  if (startGame == false && nextLevel == false) {
+  if (startGame == true && nextLevel == false) {
     $(".meterBar").replaceWith("<div class='GameOver'><h3>TIMEOUT</h3></div>");
     $(".GameOver").fadeOut(0);
     $(".GameOver").fadeIn(1000, "cubic-bezier(0.68, -0.55, 0.265, 1.55)");
     $(".GameOver h3").animate({ fontSize: "1rem" }, 200);
     $(".GameOver").addClass("shake");
-
     $(".Hole").css("animation-name", "none");
-    clearInterval(accelerometerInterval); 
-    window.removeEventListener("devicemotion", handleMotionEvent, true);
   }
 }
+
+// healthSystem 
+
+
+
+
+
+
 
 // rotatehole
 function rotateHole() {
@@ -179,22 +163,6 @@ function rotateHole() {
 
     var style = $("<style>").text(
       "@keyframes rotate { 100% { transform: rotate(360deg); } }"
-    );
-    $("head").append(style);
-  }
-
-  else if (startGame == false) {
-
-    hole.css({
-      "transform-origin": centerX + "px " + centerY + "px",
-      "animation-name": "none",
-      "animation-duration": "0s",
-      "animation-iteration-count": "once",
-      "animation-timing-function": "linear",
-    });
-
-    var style = $("<style>").text(
-      "@keyframes rotate { 0% { transform: rotate(0deg); } }"
     );
     $("head").append(style);
   }
@@ -292,6 +260,8 @@ function checkIfTouching() {
     if (!$(".pulse").length) {
       // If HoleSucking has not been called, call it
       HoleSucking();
+     
+      
     }
   } else {
     // If the rects do not intersect, log a message and set stopHoleSucking to true
@@ -330,14 +300,14 @@ function levelSuccess() {
         console.log("next level");
         clearInterval(interval);
         suckedIn();
-        startGame = false;
-       
+        levelEnd();
       }
+    
     } else {
       // If the rects do not intersect, log the message and set stopInterval to true
       console.log("time cleared");
       stopInterval = true;
-    }
+    } 
 
     // If stopInterval is true, clear the interval
 
@@ -348,6 +318,8 @@ function levelSuccess() {
 }
 
 // scales down to 0 the width and height with liner .animate, then removes the box element from the page and sets start game = false  This function is called when the box element intersects with the hole element for 3 seconds.
+
+
 
 var nextLevel = false;
 
@@ -374,22 +346,27 @@ function suckedIn() {
 
 // function spatOut() is called when the box element is spat out of the hole element.  It firs, adds 
 
-// function BreakHeart() switches the heart css backgroundimage name url  to ""../img/3D-broken-heart.svg" and sets the heartBroken variable to true
+// levell end 
 
-var heartBroken = false;
+// function levelEnd makes .level-end which is initaly hiden with display: none; visible and fades in over a period of 500 milliseconds.
 
-function BreakHeart() {
-  if (heartBroken == true) {
-    $(".heart").css("background-image", "url(../img/3D-broken-heart.svg)");
-  }
+function levelEnd() {
+
+  if (startGame == true && nextLevel == true) {
+  
+  $(".level-end").css("display", "flex");
+  $(".level-end").animate(
+    {
+      opacity: "1",
+    },
+    {
+      duration: 500,
+      easing: "linear",
+    }
+  );
 }
 
-
-
-
-
-
-
+}; 
 
 
 
