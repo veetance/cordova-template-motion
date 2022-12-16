@@ -26,12 +26,8 @@ var app = new Framework7({
     },
   ],
 
-  
-
 });
-
 var mainView = app.views.create('.view-main')
-
 
 document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -83,17 +79,42 @@ function meterTimer() {
     var time = 10;
     var timer = setInterval(function () {
       time--;
-      $(".meterTimer").html("<h4>" + time + "s" + "</h4>");
+      if (nextLevel == false) {
+        $(".meterTimer").html("<h4>" + time + "s" + "</h4>");
+      } else if (nextLevel == true && time > 1) {
+        $(".meterTimer").html("<h4>Pass</h4>");
+      }
       // $(".meterBar").css("width", time * 10 + "%");
-      if (time == 0) {
+      if (time == 0 ) {
         clearInterval(timer);
         startGame = false;
+        gameOver();
       }
     }, 1000);
   }
 }
 
+
+
+
+
+
 // .meterBar div decreases as the time decreases smoothly one % at a time and stops when the time is 0 and the startGame boolean is set to false.
+
+
+
+
+
+function pauseMeter() {
+  if (nextLevel == true) {
+    var width = $(".meterBar").width();
+    $(".meterBar").css("width", width);
+    $(".meterBar").stop();
+  }
+}
+
+
+
 
 function decreseMeter() {
   if (startGame == true) {
@@ -113,19 +134,22 @@ function decreseMeter() {
         }
       );
 
-      if (time == 0) {
+      if (time < 1 && nextLevel == false) {
         clearInterval(timer);
         startGame = false;
-        gameOver();
+      } 
+      else if (time > 1 && nextLevel == true) {
+        console.log("Current time: " + time);
+        pauseMeter();
+        clearInterval(timer);
       }
     }, 1000);
   }
 }
-
 /// display "Timeout" by replacing .meterBar with a new div with the class GameOver that has the text "Timeout" using h4, make the h3 font-size scale from 0rem to .8rem with smooth linear animation using the animate function and the css transform property scales the h3 font-size from 0rem to .8rem
 
 function gameOver() {
-  if (startGame == false) {
+  if (startGame == false && nextLevel == false) {
     $(".meterBar").replaceWith("<div class='GameOver'><h3>TIMEOUT</h3></div>");
     $(".GameOver").fadeOut(0);
     $(".GameOver").fadeIn(1000, "cubic-bezier(0.68, -0.55, 0.265, 1.55)");
@@ -133,8 +157,8 @@ function gameOver() {
     $(".GameOver").addClass("shake");
 
     $(".Hole").css("animation-name", "none");
-
-    clearInterval(accelerometerInterval); // stop the accelerometerInterval
+    clearInterval(accelerometerInterval); 
+    window.removeEventListener("devicemotion", handleMotionEvent, true);
   }
 }
 
@@ -157,13 +181,22 @@ function rotateHole() {
       "@keyframes rotate { 100% { transform: rotate(360deg); } }"
     );
     $("head").append(style);
-  } else if (nextLevel == true) {
-    $(".Hole").stop();
-    $(".Hole").css("animation-name", "none");
-    $(".Hole").css("transform", "rotate(0deg)");
-    $(".Hole").css("animation-name", "none");
-    $(".Hole").css("animation-duration", "2s");
-    
+  }
+
+  else if (startGame == false) {
+
+    hole.css({
+      "transform-origin": centerX + "px " + centerY + "px",
+      "animation-name": "none",
+      "animation-duration": "0s",
+      "animation-iteration-count": "once",
+      "animation-timing-function": "linear",
+    });
+
+    var style = $("<style>").text(
+      "@keyframes rotate { 0% { transform: rotate(0deg); } }"
+    );
+    $("head").append(style);
   }
 }
 
@@ -297,6 +330,8 @@ function levelSuccess() {
         console.log("next level");
         clearInterval(interval);
         suckedIn();
+        startGame = false;
+       
       }
     } else {
       // If the rects do not intersect, log the message and set stopInterval to true
@@ -315,18 +350,45 @@ function levelSuccess() {
 // scales down to 0 the width and height with liner .animate, then removes the box element from the page and sets start game = false  This function is called when the box element intersects with the hole element for 3 seconds.
 
 var nextLevel = false;
+
+
+var levelSuccessCount = 0;
+
 function suckedIn() {
+  levelSuccessCount++;
+
   nextLevel = true;
+
   if (nextLevel == true) {
     $(".box").animate(
       { width: "0", height: "0" },
       { duration: 400, easing: "linear" }
     );
     setTimeout(function () {
+      
       $(".box").remove();
-    }, 500);
+      console.log("Level success count: " + levelSuccessCount);
+    }, 300);
   }
 }
+
+// function spatOut() is called when the box element is spat out of the hole element.  It firs, adds 
+
+// function BreakHeart() switches the heart css backgroundimage name url  to ""../img/3D-broken-heart.svg" and sets the heartBroken variable to true
+
+var heartBroken = false;
+
+function BreakHeart() {
+  if (heartBroken == true) {
+    $(".heart").css("background-image", "url(../img/3D-broken-heart.svg)");
+  }
+}
+
+
+
+
+
+
 
 
 
