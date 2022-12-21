@@ -1,33 +1,31 @@
 var app = new Framework7({
   // App root element
-  el: '#app',
+  el: "#app",
   // other parameters
 
   routes: [
     {
-      path: '/',
-      url: 'index.html',
-    },
-    
-    {
-      path: '/page3/',
-      url: 'pages/page3.html',
+      path: "/",
+      url: "index.html",
     },
 
+    {
+      path: "/page3/",
+      url: "pages/page3.html",
+    },
 
     {
-      path: '/',
-      url: 'index.html',
+      path: "/",
+      url: "index.html",
     },
-    
+
     {
-      path: '/index/',
-      url: 'index.html',
+      path: "/index/",
+      url: "index.html",
     },
   ],
-
 });
-var mainView = app.views.create('.view-main')
+var mainView = app.views.create(".view-main");
 
 document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -67,23 +65,18 @@ $(".button").on("touchend click", function () {
     "linear"
   );
   meterTime();
- 
-  
 });
 
 // run the timer and update the .meterTimer div with the time in seconds max time of 60 seconds using innerHTML to update the h4 inside .meterTimer div and set the startGame boolean to true wile the timer is running and false when the timer is not running
 
-
 // .meterBar div decreases as the time decreases smoothly one % at a time and stops when the time is 0 and the startGame boolean is set to false.
-
 
 function meterTime() {
   if (startGame == true && nextLevel == false) {
     rotateHole();
-   
 
     var time = 10;
-    var timer = setInterval(function() {
+    var timer = setInterval(function () {
       time--;
       $(".meterTimer").html("<h4>" + time + "s" + "</h4>");
 
@@ -99,18 +92,19 @@ function meterTime() {
       );
 
       if (time == 0 && nextLevel == false) {
+        gameoverScreen();
         clearInterval(timer);
+        $(".Time").html("<h5>" + time + "</h5>");
         gameOver();
       } else if (time > 1 && nextLevel == true) {
-        console.log("Current time: " + time);
+        // console.log("Current time:" + time);
+        $(".Time").html("<h5>" + time + "s" + "</h5>");
         pauseMeter();
         clearInterval(timer);
       }
     }, 1000);
   }
 }
-
-
 
 function pauseMeter() {
   if (nextLevel == true) {
@@ -119,11 +113,6 @@ function pauseMeter() {
     $(".meterBar").stop();
   }
 }
-
-
-
-
-
 
 /// display "Timeout" by replacing .meterBar with a new div with the class GameOver that has the text "Timeout" using h4, make the h3 font-size scale from 0rem to .8rem with smooth linear animation using the animate function and the css transform property scales the h3 font-size from 0rem to .8rem
 
@@ -138,13 +127,7 @@ function gameOver() {
   }
 }
 
-// healthSystem 
-
-
-
-
-
-
+// healthSystem
 
 // rotatehole
 function rotateHole() {
@@ -260,8 +243,6 @@ function checkIfTouching() {
     if (!$(".pulse").length) {
       // If HoleSucking has not been called, call it
       HoleSucking();
-     
-      
     }
   } else {
     // If the rects do not intersect, log a message and set stopHoleSucking to true
@@ -302,12 +283,11 @@ function levelSuccess() {
         suckedIn();
         levelEnd();
       }
-    
     } else {
       // If the rects do not intersect, log the message and set stopInterval to true
       console.log("time cleared");
       stopInterval = true;
-    } 
+    }
 
     // If stopInterval is true, clear the interval
 
@@ -319,10 +299,7 @@ function levelSuccess() {
 
 // scales down to 0 the width and height with liner .animate, then removes the box element from the page and sets start game = false  This function is called when the box element intersects with the hole element for 3 seconds.
 
-
-
 var nextLevel = false;
-
 
 var levelSuccessCount = 0;
 
@@ -337,39 +314,53 @@ function suckedIn() {
       { duration: 400, easing: "linear" }
     );
     setTimeout(function () {
-      
       $(".box").remove();
       console.log("Level success count: " + levelSuccessCount);
     }, 300);
   }
 }
 
-// function spatOut() is called when the box element is spat out of the hole element.  It firs, adds 
-
-// levell end 
+// level end
 
 // function levelEnd makes .level-end which is initaly hiden with display: none; visible and fades in over a period of 500 milliseconds.
 
 function levelEnd() {
-
   if (startGame == true && nextLevel == true) {
-  
-  $(".level-end").css("display", "flex");
-  $(".level-end").animate(
-    {
-      opacity: "1",
-    },
-    {
-      duration: 500,
-      easing: "linear",
-    }
-  );
+    setTimeout(function () {
+      $(".level-end").css("display", "flex");
+      $(".level-end").animate(
+        {
+          opacity: "1",
+        },
+        {
+          duration: 500,
+          easing: "linear",
+        }
+      );
+    }, 1000);
+  }
 }
 
-}; 
+// function gameoverScreen makes .game-over which is initaly hiden with display: none; visible and fades in over a period of 500 milliseconds. it triggeres if startGame == false and nextLevel == true
 
+function gameoverScreen() {
+  if (nextLevel == false) {
+    suckedIn();
 
-
+    setTimeout(function () {
+      $(".game-over").css("display", "flex");
+      $(".game-over").animate(
+        {
+          opacity: "1",
+        },
+        {
+          duration: 500,
+          easing: "linear",
+        }
+      );
+    }, 10);
+  }
+}
 
 var startTilt = false;
 
@@ -380,7 +371,11 @@ function onDeviceReady() {
     startTilt = true;
 
     // Cordova is now initialized. Have fun!
-    if (window.DeviceOrientationEvent && startTilt == true) {
+    if (
+      window.DeviceOrientationEvent &&
+      startTilt == true &&
+      startGame === true
+    ) {
       window.addEventListener("deviceorientation", handleMotion);
     } else {
       alert("sorry not supported");
@@ -415,30 +410,32 @@ function onDeviceReady() {
       rotateBox();
 
       function animateBall() {
-        // Update the x and y position of the .box element by adding
-        // the x and y values from the accelerometer data
+        if (startGame == true) {
+          // Update the x and y position of the .box element by adding
+          // the x and y values from the accelerometer data
 
-        var box = $(".box");
-        var currentX = parseInt(box.css("left"));
-        var currentY = parseInt(box.css("top"));
-        box.css("left", currentX + y + movebox - 10);
-        box.css("top", currentY + x + movebox - 10);
+          var box = $(".box");
+          var currentX = parseInt(box.css("left"));
+          var currentY = parseInt(box.css("top"));
+          box.css("left", currentX + y + movebox - 10);
+          box.css("top", currentY + x + movebox - 10);
 
-        // make .platform act as a portal.
-        var pWW = $(".platform").width();
-        var pHH = $(".platform").height();
+          // make .platform act as a portal.
+          var pWW = $(".platform").width();
+          var pHH = $(".platform").height();
 
-        if (currentX > pWW) {
-          box.css("left", 0);
-        } else if (currentX < -20) {
-          box.css("left", pWW);
-        } else if (currentY > pHH) {
-          box.css("top", 0);
-        } else if (currentY < 0) {
-          box.css("top", pHH);
+          if (currentX > pWW) {
+            box.css("left", 0);
+          } else if (currentX < -20) {
+            box.css("left", pWW);
+          } else if (currentY > pHH) {
+            box.css("top", 0);
+          } else if (currentY < 0) {
+            box.css("top", pHH);
+          }
+
+          checkIfTouching();
         }
-
-        checkIfTouching();
       }
 
       animateBall();
@@ -448,6 +445,7 @@ function onDeviceReady() {
 
 // reset accelerometer on touch or click of .lives
 
-$(".refresh-button").on("touchend click", function () {
+$(".refresh-button, .lives").on("touchend click", function () {
   window.location.reload();
+  $(".lives").css("opacity", ".5");
 });
