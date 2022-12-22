@@ -1,14 +1,22 @@
-# Basic Cordova App 
+# Black Hole motion game
 
-Updates to original Cordova app
-- Added Google Fonts to Content Security Policy
-- Linked new CSS and JS files
-- Removed Cordova template HTML markup
+ 
+# Divine Okonkwo Assignmet 02 Motion [ BLACKHOLE DEMO ]
 
-## Install instructions
+ 1. press begin
+ 2. tilt phone to contron ball to hover on the Blackhole for 3 seconds to pass the level
+ 3. restart 
 
-1. Fork the repository and clone to your machine OR download the zip
-2. install android platform
-```
-npx cordova platform add android
-```
+ ** Future features **
+ Health systems 
+ new levels and level handling system
+ use camera to take photo and update multiplayer leaderboard 
+ connect to firebase to update leaderboard
+
+ ** sources **
+
+ all icons where designed by me in adobe illustrator except the clock icon, its google icon
+
+ ** hard reset**
+ tap the hearts 
+
